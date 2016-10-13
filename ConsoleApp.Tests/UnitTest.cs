@@ -9,7 +9,21 @@ namespace ConsoleApp.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            Program.Method();
+            int[] arr = new[] { 1, 2, 3, 1, 1, 2, 3 };
+            int? res = Program.Method(arr);
+            Assert.AreEqual(3, res);
+
+            arr = new[] { 1, 2, 1, 1, 2 };
+            res = Program.Method(arr);
+            Assert.AreEqual(2, res);
+
+            arr = new[] { 1000, 0, 1000 };
+            res = Program.Method(arr);
+            Assert.AreEqual(1, res);
+
+            arr = new[] { 0, 100, 0 };
+            res = Program.Method(arr);
+            Assert.AreEqual(1, res);
         }
     }
 }
