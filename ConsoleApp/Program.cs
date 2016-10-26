@@ -54,7 +54,6 @@ namespace ConsoleApp
                 }
             }
 
-
             return result;
         }
     }
@@ -77,6 +76,8 @@ namespace ConsoleApp
             graph.AddEdge(5,3);
             graph.AddEdge(5,4);
             string traverse = graph.Traverse(0);
+
+            // should be: 0 1 5 4 2 3
 
             Console.WriteLine(traverse);
             Console.Write("Press ENTER...");
