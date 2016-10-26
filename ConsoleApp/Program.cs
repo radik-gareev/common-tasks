@@ -27,7 +27,7 @@ namespace ConsoleApp
             nodes[from].AddLast(to);
         }
 
-        public string Traverse(int startNode)
+        public string BreadthFirstSearch(int startNode)
         {
             string result = "";
             bool[] isNodeVisited = new bool[NumberOfNodes];
@@ -56,6 +56,34 @@ namespace ConsoleApp
 
             return result;
         }
+
+        public string DepthFirstSearch(int startNode)
+        {
+            string result = "";
+            Stack<int> stack = new Stack<int>();
+            bool[] isNodeVisited = new bool[NumberOfNodes];
+            isNodeVisited[startNode] = true;
+            stack.Push(startNode);
+
+            while (stack.Any())
+            {
+                startNode = stack.Pop();
+                result += startNode + " ";
+
+                LinkedList<int> list = nodes[startNode];
+
+                foreach (var val in list)
+                {
+                    if (!isNodeVisited[val])
+                    {
+                        isNodeVisited[val] = true;
+                        stack.Push(val);
+                    }
+                }
+            }
+
+            return result;
+        }
     }
 
     public class Program
@@ -75,11 +103,13 @@ namespace ConsoleApp
             graph.AddEdge(1,5);
             graph.AddEdge(5,3);
             graph.AddEdge(5,4);
-            string traverse = graph.Traverse(0);
+            string bfs = graph.BreadthFirstSearch(0);
+            string dfs = graph.DepthFirstSearch(0);
 
             // should be: 0 1 5 4 2 3
 
-            Console.WriteLine(traverse);
+            Console.WriteLine("BFS: " + bfs);
+            Console.WriteLine("DFS: " + dfs);
             Console.Write("Press ENTER...");
             Console.Read();
         }
