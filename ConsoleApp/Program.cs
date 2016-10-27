@@ -17,7 +17,7 @@ namespace ConsoleApp
             int[] arr = new[] { 1, 3, 0, 2, 6, 7, 4, 5 };
             int k = 3;
 
-            Sort(arr, k);
+            Sort(arr, 0, arr.Length-1);
             Console.WriteLine(string.Join(", ", arr));
             Console.Write("Press ENTER...");
             Console.Read();
@@ -67,6 +67,33 @@ namespace ConsoleApp
             arr[i] = num;
             Sort(arr, start, i - 1);
             Sort(arr, i + 1, end);
+        }
+
+        private static void Sort2(int[] arr, int start, int end)
+        {
+            int pivot = arr[(start + end)/2];
+            int left = start;
+            int right = end;
+            while (left <= right )
+            {
+                while (arr[left] < pivot)
+                    left++;
+                while (arr[right] > pivot)
+                    right--;
+                if (left <= right)
+                {
+                    int tmp = arr[left];
+                    arr[left] = arr[right];
+                    arr[right] = tmp;
+                    left++;
+                    right--;
+                }
+            }
+
+            if(start < right)
+                Sort2(arr, start, right);
+            if(end > left)
+                Sort2(arr, left, end);
         }
     }
 }
