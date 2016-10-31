@@ -14,7 +14,7 @@ namespace ConsoleApp
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            int[] arr = new [] { 9, 12, 16 };
+            int[] arr = new[] { 9, 12, 16 };
             var allDivisors = GetArrayDivisors(arr);
 
             Console.WriteLine(string.Join(", ", allDivisors));
@@ -25,7 +25,7 @@ namespace ConsoleApp
         public static IEnumerable<int> GetArrayDivisors(int[] arr)
         {
             List<int> result = new List<int>();
-            for(int i = 0; i < arr.Length; i++)
+            for (int i = 0; i < arr.Length; i++)
             {
                 var elementDivisors = GetNumberDivisors(arr[i]);
                 result.AddRange(elementDivisors);
@@ -43,11 +43,29 @@ namespace ConsoleApp
                 if (number % divider == 0)
                 {
                     dividers.Add(divider);
-                    if(divider != number / divider)
+                    if (divider != number / divider)
                         dividers.Add(number / divider);
                 }
             }
             return dividers;
+        }
+
+        private static int GetMaxPrimeDivisor(int number)
+        {
+            int k = 2;
+            while (k <= Math.Sqrt(number))
+            {
+                if (number % k == 0)
+                {
+                    number = number / k;
+                }
+                else
+                {
+                    k++;
+                }
+            }
+
+            return number;
         }
     }
 }
