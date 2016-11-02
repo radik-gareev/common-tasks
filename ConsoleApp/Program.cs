@@ -14,7 +14,7 @@ namespace ConsoleApp
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-
+            Console.WriteLine();
             Console.Write("Press ENTER...");
             Console.Read();
         }
