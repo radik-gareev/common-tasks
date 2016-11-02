@@ -12,12 +12,14 @@ namespace ConsoleApp
         /// Split coin sequence into two heaps, making the difference minimal.
         /// </summary>
         /// <param name="args"></param>
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            int[] arr = new[] {5,7,8,10,20,52,9,10,1};
+            int[] arr = new[] { 4, 5, 6, 7, 8 };
             Tuple<int[], int[]> heaps = SplitIntoTwoArrays(arr);
             Console.WriteLine(string.Join(", ", heaps.Item1));
             Console.WriteLine(string.Join(", ", heaps.Item2));
+            int minDiff = GetMinDifference(arr);
+            Console.WriteLine("Min difference: " + minDiff);
             Console.Write("Press ENTER...");
             Console.Read();
         }
@@ -55,6 +57,34 @@ namespace ConsoleApp
             }
 
             return new Tuple<int[], int[]>(array1, array2);
+        }
+
+        public static int GetMinDifference(int[] arr)
+        {
+            return GetMinDifference(arr, arr.Length);
+        }
+
+        private static int GetMinDifference(int[] arr, int n)
+        {
+            int sumTotal = 0;
+            for (int i = 0; i < n; i++)
+                sumTotal += arr[i];
+
+            return GetMinDifferenceRecursive(arr, n, 0, sumTotal);
+        }
+
+        private static int GetMinDifferenceRecursive(int[] arr, int i, int sumCalculated, int sumTotal)
+        {
+            if (i == 0)
+            {
+                int diffBetweenTwoSets = Math.Abs((sumTotal - sumCalculated) - sumCalculated);
+                return diffBetweenTwoSets;
+            }
+
+            int sumIfIncludedInFirstSet = GetMinDifferenceRecursive(arr, i - 1, sumCalculated + arr[i - 1], sumTotal);
+            int sumIfNotIncludedInFirstSet = GetMinDifferenceRecursive(arr, i - 1, sumCalculated, sumTotal);
+            int minSum = Math.Min(sumIfIncludedInFirstSet, sumIfNotIncludedInFirstSet);
+            return minSum;
         }
     }
 }
