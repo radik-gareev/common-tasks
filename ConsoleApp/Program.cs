@@ -34,24 +34,24 @@ namespace ConsoleApp
             {
                 for (int j = 0; j < b.Length; j++)
                 {
-                    if (a[i] == b[j])
+                    if (a[i] != b[j])
                     {
-                        int indexA = i;
-                        int indexB = j;
-                        while (indexA < a.Length && indexB < b.Length && a[indexA] == b[indexB])
-                        {
-                            tempResult += a[indexA];
-                            indexA++;
-                            indexB++;
-                        }
-                        j = j + tempResult.Length - 1;
+                        continue;
                     }
-                    else
+
+                    int indexA = i;
+                    int indexB = j;
+                    while (indexA < a.Length && indexB < b.Length && a[indexA] == b[indexB])
                     {
-                        if (tempResult.Length > result.Length)
-                            result = tempResult;
-                        tempResult = string.Empty;
+                        tempResult += a[indexA];
+                        indexA++;
+                        indexB++;
                     }
+                    j = j + tempResult.Length - 1;
+
+                    if (tempResult.Length > result.Length)
+                        result = tempResult;
+                    tempResult = string.Empty;
                 }
             }
 

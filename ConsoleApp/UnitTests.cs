@@ -52,6 +52,16 @@ namespace ConsoleApp
             b = "912387";
             result = Program.GetLongestCommonSubstring(a, b);
             Assert.AreEqual("", result);
+
+            a = "123456";
+            b = "2323";
+            result = Program.GetLongestCommonSubstring(a, b);
+            Assert.AreEqual("23", result);
+
+            a = "2323";
+            b = "123456";
+            result = Program.GetLongestCommonSubstring(a, b);
+            Assert.AreEqual("23", result);
         }
     }
 }
