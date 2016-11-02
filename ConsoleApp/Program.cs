@@ -8,18 +8,22 @@ namespace ConsoleApp
 {
     public class Program
     {
+        private static int minSumFromSimplifiedCalculation = int.MaxValue;
+
         /// <summary>
         /// Split coin sequence into two heaps, making the difference minimal.
         /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
-            int[] arr = new[] { 4, 5, 6, 7, 8 };
-            Tuple<int[], int[]> heaps = SplitIntoTwoArrays(arr);
-            Console.WriteLine(string.Join(", ", heaps.Item1));
-            Console.WriteLine(string.Join(", ", heaps.Item2));
-            int minDiff = GetMinDifference(arr);
-            Console.WriteLine("Min difference: " + minDiff);
+            int[] arr = new[] { 1, 2, 3 };
+            //Tuple<int[], int[]> heaps = SplitIntoTwoArrays(arr);
+            //Console.WriteLine(string.Join(", ", heaps.Item1));
+            //Console.WriteLine(string.Join(", ", heaps.Item2));
+            int minDiff1 = GetMinDifference(arr);
+            int minDiff2 = GetMinDifference_Simplified(arr);
+            Console.WriteLine("Min difference: " + minDiff1);
+            Console.WriteLine("Min difference: " + minDiff2);
             Console.Write("Press ENTER...");
             Console.Read();
         }
@@ -64,6 +68,11 @@ namespace ConsoleApp
             return GetMinDifference(arr, arr.Length);
         }
 
+        public static int GetMinDifference_Simplified(int[] arr)
+        {
+            return GetMinDifference_Simplified(arr, arr.Length);
+        }
+
         private static int GetMinDifference(int[] arr, int n)
         {
             int sumTotal = 0;
@@ -71,6 +80,17 @@ namespace ConsoleApp
                 sumTotal += arr[i];
 
             return GetMinDifferenceRecursive(arr, n, 0, sumTotal);
+        }
+
+        private static int GetMinDifference_Simplified(int[] arr, int n)
+        {
+            int sumTotal = 0;
+            for (int i = 0; i < n; i++)
+                sumTotal += arr[i];
+
+            minSumFromSimplifiedCalculation = int.MaxValue;
+            GetMinDifferenceRecursive_Simplified(arr, n, 0, sumTotal);
+            return minSumFromSimplifiedCalculation;
         }
 
         private static int GetMinDifferenceRecursive(int[] arr, int i, int sumCalculated, int sumTotal)
@@ -85,6 +105,24 @@ namespace ConsoleApp
             int sumIfNotIncludedInFirstSet = GetMinDifferenceRecursive(arr, i - 1, sumCalculated, sumTotal);
             int minSum = Math.Min(sumIfIncludedInFirstSet, sumIfNotIncludedInFirstSet);
             return minSum;
+        }
+
+
+        private static void GetMinDifferenceRecursive_Simplified(int[] arr, int i, int sumCalculated, int sumTotal)
+        {
+            if (i == 0)
+            {
+                int diffBetweenTwoSets = Math.Abs((sumTotal - sumCalculated) - sumCalculated);
+                if (diffBetweenTwoSets < minSumFromSimplifiedCalculation)
+                    minSumFromSimplifiedCalculation = diffBetweenTwoSets;
+                return;
+            }
+
+            if (minSumFromSimplifiedCalculation > 0)
+                GetMinDifferenceRecursive_Simplified(arr, i - 1, sumCalculated + arr[i - 1], sumTotal);
+
+            if (minSumFromSimplifiedCalculation > 0)
+                GetMinDifferenceRecursive_Simplified(arr, i - 1, sumCalculated, sumTotal);
         }
     }
 }
