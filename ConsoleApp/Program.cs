@@ -38,18 +38,11 @@ namespace ConsoleApp
                     {
                         int indexA = i;
                         int indexB = j;
-                        while (indexA < a.Length && indexB < b.Length)
+                        while (indexA < a.Length && indexB < b.Length && a[indexA] == b[indexB])
                         {
-                            if (a[indexA] == b[indexB])
-                            {
-                                tempResult += a[indexA];
-                                indexA++;
-                                indexB++;
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            tempResult += a[indexA];
+                            indexA++;
+                            indexB++;
                         }
                         j = j + tempResult.Length - 1;
                     }
