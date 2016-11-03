@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\Generate.cs" />
+    <Compile Include="Helpers\Generator.cs" />
     <Compile Include="Helpers\LinkedList.cs" />
     <Compile Include="Helpers\Print.cs" />
     <Compile Include="Helpers\Tree.cs" />

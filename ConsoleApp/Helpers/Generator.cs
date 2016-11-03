@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Helpers
 {
-    public static class Generate
+    public static class Generator
     {
         public static LinkedList LinkedListFromArray(int[] arr)
         {

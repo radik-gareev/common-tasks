@@ -15,7 +15,7 @@ namespace ConsoleApp
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            LinkedList node = Generate.LinkedListFromArray(new[] { 2, 4, 9, 1, 2, 0, 3, 72 });
+            LinkedList node = Generator.LinkedListFromArray(new[] { 2, 4, 9, 1, 2, 0, 3, 72 });
             Print.LinkedList(node);
             SortSingleLinkedList(node);
             Print.LinkedList(node);
