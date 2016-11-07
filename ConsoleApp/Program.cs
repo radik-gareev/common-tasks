@@ -9,7 +9,7 @@ namespace ConsoleApp
 {
     public class Program
     {
-        private static int _towerHeight = 29;
+        private static int _towerHeight = 15;
         private static List<string> combinations = new List<string>();
         private static int combinationsCount;
 
@@ -35,7 +35,7 @@ namespace ConsoleApp
             }
 
             Console.WriteLine("Total count #1: " + combinations.Count * 2);
-            Console.WriteLine("Total count #2: " + combinationsCount);
+            Console.WriteLine("Total count #2: " + combinationsCount * 2);
             Console.Write("Press ENTER...");
             Console.Read();
         }
@@ -68,7 +68,7 @@ namespace ConsoleApp
             }
 
             // wrong combination
-            if (height < 10 && height != 1)
+            if (height < 10)
             {
                 return;
             }
