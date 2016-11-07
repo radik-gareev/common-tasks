@@ -9,10 +9,8 @@ namespace ConsoleApp
 {
     public class Program
     {
-        private static int _towerHeight = 15;
         private static List<string> combinations = new List<string>();
         private static int combinationsCount;
-
 
         /// <summary>
         /// You have cups of height 10. You can put it one upon another and get tower of length 20 or 11 depending on cup orientation. 
@@ -22,44 +20,68 @@ namespace ConsoleApp
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            if (_towerHeight >= 10)
-            {
-                GetNumberOfCombinations(10, 0, string.Empty);
-                GetNumberOfCombinations_Improved(_towerHeight);
-            }
+            //if (_towerHeight >= 10)
+            //{
+            //    GetNumberOfCombinations(10, 0, string.Empty);
+            //    GetNumberOfCombinations_Improved(_towerHeight);
+            //}
 
-            bool isUnique = combinations.Distinct().Count() == combinations.Count();
-            for (int i = 0; i < combinations.Count; i++)
-            {
-                //Console.WriteLine(i + 1 + ": " + combinations[i]);
-            }
+            //bool isUnique = combinations.Distinct().Count() == combinations.Count();
+            //for (int i = 0; i < combinations.Count; i++)
+            //{
+            //    //Console.WriteLine(i + 1 + ": " + combinations[i]);
+            //}
 
-            Console.WriteLine("Total count #1: " + combinations.Count * 2);
-            Console.WriteLine("Total count #2: " + combinationsCount * 2);
+            int height = 80;
+            int count1 = GetNumberOfCombinations(height);
+            Console.WriteLine("Total count #1: " + count1);
+
+            int count2 = GetNumberOfCombinations_Improved(height);
+            Console.WriteLine("Total count #2: " + count2);
             Console.Write("Press ENTER...");
             Console.Read();
         }
 
-        public static void GetNumberOfCombinations(int previousHeight, byte previousOrientation, string combination)
+        public static int GetNumberOfCombinations(int height)
+        {
+            if (height >= 10)
+            {
+                GetNumberOfCombinations(height, 10, 0, string.Empty);
+            }
+
+            return combinations.Count * 2;
+        }
+
+        public static int GetNumberOfCombinations_Improved(int height)
+        {
+            if (height >= 10)
+            {
+                GetNumberOfCombinations_Improved_Recursive(height);
+            }
+
+            return combinationsCount*2;
+        }
+
+        private static void GetNumberOfCombinations(int height, int previousHeight, byte previousOrientation, string combination)
         {
             combination += previousOrientation + " ";
-            if (previousHeight > _towerHeight)
+            if (previousHeight > height)
             {
                 return;
             }
 
-            if (previousHeight == _towerHeight)
+            if (previousHeight == height)
             {
                 combinations.Add(combination);
             }
             else
             {
-                GetNumberOfCombinations(previousHeight + 1, previousOrientation, combination);
-                GetNumberOfCombinations(previousHeight + 10, (byte)(previousOrientation ^ 1), combination);
+                GetNumberOfCombinations(height, previousHeight + 1, previousOrientation, combination);
+                GetNumberOfCombinations(height, previousHeight + 10, (byte)(previousOrientation ^ 1), combination);
             }
         }
 
-        public static void GetNumberOfCombinations_Improved(int height)
+        private static void GetNumberOfCombinations_Improved_Recursive(int height)
         {
             if (height == 0)
             {
@@ -73,8 +95,8 @@ namespace ConsoleApp
                 return;
             }
 
-            GetNumberOfCombinations_Improved(height - 1);
-            GetNumberOfCombinations_Improved(height - 10);
+            GetNumberOfCombinations_Improved_Recursive(height - 1);
+            GetNumberOfCombinations_Improved_Recursive(height - 10);
         }
     }
 }
