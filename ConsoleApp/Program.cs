@@ -9,7 +9,7 @@ namespace ConsoleApp
 {
     public class Program
     {
-        private static int _towerHeight = 21;
+        private static int _towerHeight = 20;
         private static List<string> combinations = new List<string>();
 
 
@@ -25,6 +25,8 @@ namespace ConsoleApp
             {
                 GetNumberOfCombinations(10, 0, string.Empty);
                 GetNumberOfCombinations(10, 1, string.Empty);
+
+                int numberOfCombinations = GetNumberOfCombinations_Improved(_towerHeight, 0);
             }
 
             bool isUnique = combinations.Distinct().Count() == combinations.Count();
@@ -53,8 +55,32 @@ namespace ConsoleApp
             else
             {
                 GetNumberOfCombinations(previousHeight + 1, previousOrientation, combination);
-                GetNumberOfCombinations(previousHeight + 10, (byte) (previousOrientation ^ 1), combination);
+                GetNumberOfCombinations(previousHeight + 10, (byte)(previousOrientation ^ 1), combination);
             }
+        }
+
+        public static int GetNumberOfCombinations_Improved(int height, int combinationsCount)
+        {
+            if (height == 10 || height == 1)
+            {
+                return combinationsCount + 1;
+            }
+
+            if (height == 0)
+            {
+                return combinationsCount;
+            }
+
+            // wrong combination
+            if (height < 10)
+            {
+                return 0;
+            }
+
+            combinationsCount += GetNumberOfCombinations_Improved(height - 1, combinationsCount);
+            combinationsCount += GetNumberOfCombinations_Improved(height - 10, combinationsCount);
+
+            return combinationsCount;
         }
     }
 }
