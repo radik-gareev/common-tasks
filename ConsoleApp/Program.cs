@@ -9,8 +9,9 @@ namespace ConsoleApp
 {
     public class Program
     {
-        private static int _towerHeight = 22;
+        private static int _towerHeight = 29;
         private static List<string> combinations = new List<string>();
+        private static int combinationsCount;
 
 
         /// <summary>
@@ -24,22 +25,21 @@ namespace ConsoleApp
             if (_towerHeight >= 10)
             {
                 GetNumberOfCombinations(10, 0, string.Empty);
-                GetNumberOfCombinations(10, 1, string.Empty);
-
-                int numberOfCombinations = GetNumberOfCombinations_Improved(_towerHeight, 0);
+                GetNumberOfCombinations_Improved(_towerHeight);
             }
 
             bool isUnique = combinations.Distinct().Count() == combinations.Count();
             for (int i = 0; i < combinations.Count; i++)
             {
-                Console.WriteLine(i + 1 + ": " + combinations[i]);
+                //Console.WriteLine(i + 1 + ": " + combinations[i]);
             }
 
+            Console.WriteLine("Total count #1: " + combinations.Count * 2);
+            Console.WriteLine("Total count #2: " + combinationsCount);
             Console.Write("Press ENTER...");
             Console.Read();
         }
 
-        /// <returns></returns>
         public static void GetNumberOfCombinations(int previousHeight, byte previousOrientation, string combination)
         {
             combination += previousOrientation + " ";
@@ -59,23 +59,22 @@ namespace ConsoleApp
             }
         }
 
-        public static int GetNumberOfCombinations_Improved(int height, int combinationsCount)
+        public static void GetNumberOfCombinations_Improved(int height)
         {
             if (height == 0)
             {
-                return combinationsCount + 1;
+                combinationsCount++;
+                return;
             }
 
             // wrong combination
-            if (height < 10)
+            if (height < 10 && height != 1)
             {
-                return 0;
+                return;
             }
 
-            combinationsCount += GetNumberOfCombinations_Improved(height - 1, combinationsCount);
-            combinationsCount += GetNumberOfCombinations_Improved(height - 10, combinationsCount);
-
-            return combinationsCount;
+            GetNumberOfCombinations_Improved(height - 1);
+            GetNumberOfCombinations_Improved(height - 10);
         }
     }
 }
