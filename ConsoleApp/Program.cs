@@ -9,7 +9,7 @@ namespace ConsoleApp
 {
     public class Program
     {
-        private static int _towerHeight = 20;
+        private static int _towerHeight = 22;
         private static List<string> combinations = new List<string>();
 
 
@@ -61,14 +61,9 @@ namespace ConsoleApp
 
         public static int GetNumberOfCombinations_Improved(int height, int combinationsCount)
         {
-            if (height == 10 || height == 1)
-            {
-                return combinationsCount + 1;
-            }
-
             if (height == 0)
             {
-                return combinationsCount;
+                return combinationsCount + 1;
             }
 
             // wrong combination
