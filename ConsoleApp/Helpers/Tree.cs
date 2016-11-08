@@ -16,5 +16,12 @@ namespace ConsoleApp.Helpers
         {
             Value = value;
         }
+
+        public Tree(int value, Tree left, Tree right)
+        {
+            Value = value;
+            Left = left;
+            Right = right;
+        }
     }
 }
