@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp.Helpers
 {
@@ -11,7 +8,6 @@ namespace ConsoleApp.Helpers
         public Tree Left;
         public Tree Right;
         public int Value;
-        public string DfsTraversal;
 
         public Tree(int value)
         {
@@ -66,7 +62,6 @@ namespace ConsoleApp.Helpers
             if (node == null)
                 return;
 
-            DfsTraversal += node.Value + " ";
             DFS(node.Left);
             DFS(node.Right);
         }
