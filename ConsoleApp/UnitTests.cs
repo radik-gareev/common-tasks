@@ -31,7 +31,7 @@ namespace ConsoleApp
                 Debug.WriteLine("{0}. GetNumberOfCombinations finished in {1}ms, result={2}", i + 1, stopwatch.ElapsedMilliseconds, count1);
 
                 stopwatch = Stopwatch.StartNew();
-                int count2 = Program.GetNumberOfCombinations_Improved(height);
+                uint count2 = Program.GetNumberOfCombinations_Improved(height);
                 stopwatch.Stop();
                 Debug.WriteLine("{0}. GetNumberOfCombinations_Improved finished in {1}ms, result={2}", i + 1, stopwatch.ElapsedMilliseconds, count2);
 
