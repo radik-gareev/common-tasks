@@ -9,14 +9,13 @@ namespace ConsoleApp
 {
     public class Program
     {
-        private static string dfs = "";
-
         /// <summary>
         /// Construct sorted linked list from binary search tree
         /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
+
             Tree tree = new Tree(5,
                 new Tree(3,
                     new Tree(1,
@@ -28,28 +27,35 @@ namespace ConsoleApp
                         new Tree(9))));
 
             BinaryTreeToLinkedList(tree);
-            Console.WriteLine();
+            Print.LinkedList(list);
             Console.Write("Press ENTER...");
             Console.Read();
         }
 
-        public static void BinaryTreeToLinkedList(Tree root)
-        {
-            LinkedList list = new LinkedList(root.Value);
-            Tree node = root;
-            Traversal(list, node);
-        }
+        private static LinkedList current;
+        private static LinkedList list;
 
-        private static void Traversal(LinkedList list, Tree node)
+        private static void BinaryTreeToLinkedList(Tree node)
         {
             if (node == null)
             {
                 return;
             }
 
-            list.Next = new LinkedList(node.Value);
-            Traversal(list, node.Left);
-            Traversal(list, node.Right);
+            BinaryTreeToLinkedList(node.Left);
+
+            if (node.Left == null && node.Right == null && list == null)
+            {
+                list = new LinkedList(node.Value);
+                current = list;
+            }
+            else
+            {
+                current.Next = new LinkedList(node.Value);
+                current = current.Next;
+            }
+
+            BinaryTreeToLinkedList(node.Right);
         }
     }
 }
