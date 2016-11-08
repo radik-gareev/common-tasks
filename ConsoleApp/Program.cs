@@ -15,7 +15,6 @@ namespace ConsoleApp
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
-
             Tree tree = new Tree(5,
                 new Tree(3,
                     new Tree(1,
@@ -44,7 +43,7 @@ namespace ConsoleApp
 
             BinaryTreeToLinkedList(node.Left);
 
-            if (node.Left == null && node.Right == null && list == null)
+            if (list == null)
             {
                 list = new LinkedList(node.Value);
                 current = list;
