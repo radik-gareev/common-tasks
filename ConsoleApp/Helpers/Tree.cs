@@ -11,7 +11,6 @@ namespace ConsoleApp.Helpers
         public Tree Left;
         public Tree Right;
         public int Value;
-        public string DfsTraversal;
 
         public Tree(int value)
         {
@@ -66,7 +65,7 @@ namespace ConsoleApp.Helpers
             if (node == null)
                 return;
 
-            DfsTraversal += node.Value + " ";
+            Console.Write(node.Value + " ");
             DFS(node.Left);
             DFS(node.Right);
         }
