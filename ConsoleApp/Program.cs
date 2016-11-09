@@ -15,30 +15,62 @@ namespace ConsoleApp
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            int[] arr = new[] {0,3,2,1,9};
+            int[] arr = new[] { 2, 5, 1, 3, 4 };
 
-            int maxSum = GetMaxOr(arr);
+            int[] range = GetMaxOrRange(arr);
 
-            Console.WriteLine(maxSum);
+            Console.WriteLine("Range: " + string.Join(", ", range));
             Console.Write("Press ENTER...");
             Console.Read();
         }
 
-        public static int GetMaxOr(int[] arr)
+        public static int[] GetMaxOrRange(int[] arr)
         {
-            int totalMaxSum = 0;
+            if(arr == null || arr.Length < 2)
+                return new int[0];
+
+            int totalOr = 0;
             int sum = 0;
+            int startIndex = 0;
+            int endIndex = 0;
+            int prevRangeLength = arr.Length;
+
+            for (int i = 0; i < arr.Length; i++)
+                totalOr = totalOr | arr[i];
 
             for (int i = 0; i < arr.Length; i++)
             {
-                sum = sum | arr[i];
-                if (sum < 0)
-                    sum = 0;
-                if (totalMaxSum < sum)
-                    totalMaxSum = sum;
+                sum = arr[i];
+                for (int j = i + 1; j < arr.Length; j++)
+                {
+                    int value = sum | arr[j];
+                    if (value == totalOr)
+                    {
+                        if (j - i < prevRangeLength)
+                        {
+                            startIndex = i;
+                            endIndex = j;
+                            prevRangeLength = endIndex - startIndex;
+                        }
+
+                        break;
+                    }
+                    sum = value;
+                }
             }
 
-            return totalMaxSum;
+            if (endIndex > startIndex)
+            {
+                int[] result = new int[endIndex - startIndex + 1];
+                Array.Copy(arr, startIndex, result, 0, result.Length);
+
+                Console.WriteLine("Total OR: " + totalOr);
+                Console.WriteLine("Range OR: " + result.Aggregate(0, (current, t) => current | t));
+
+                return result;
+            }
+
+            return new int[0];
         }
     }
 }
