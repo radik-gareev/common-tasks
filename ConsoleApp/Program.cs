@@ -10,19 +10,35 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// Find shortest range in array which OR is maximal.
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Console.WriteLine();
+            int[] arr = new[] {0,3,2,1,9};
+
+            int maxSum = GetMaxOr(arr);
+
+            Console.WriteLine(maxSum);
             Console.Write("Press ENTER...");
             Console.Read();
         }
 
-        public static void Method()
+        public static int GetMaxOr(int[] arr)
         {
-            
+            int totalMaxSum = 0;
+            int sum = 0;
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                sum = sum | arr[i];
+                if (sum < 0)
+                    sum = 0;
+                if (totalMaxSum < sum)
+                    totalMaxSum = sum;
+            }
+
+            return totalMaxSum;
         }
     }
 }
