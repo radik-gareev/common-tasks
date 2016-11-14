@@ -48,36 +48,11 @@ namespace ConsoleApp
                 return;
 
             var tmpLeft = root.Left;
-            var tmpRight = root.Right;
+            root.Left = root.Right;
+            root.Right = tmpLeft;
 
-            if (tmpLeft != null)
-            {
-                if (root.Right != null)
-                    root.Right.Value = tmpLeft.Value;
-                else
-                {
-                    root.Right = new Tree(tmpLeft.Value);
-                }
-            }
-            else
-            {
-                root.Right = null;
-            }
-
-            if (tmpRight != null)
-            {
-                if (root.Left != null)
-                    root.Left.Value = tmpRight.Value;
-                else
-                    root.Left = new Tree(tmpRight.Value);
-            }
-            else
-            {
-                root.Left = null;
-            }
-
-            MirrorBinaryTree_InPlace(tmpLeft);
-            MirrorBinaryTree_InPlace(tmpRight);
+            MirrorBinaryTree_InPlace(root.Left);
+            MirrorBinaryTree_InPlace(root.Right);
         }
 
         private static void Print(Tree tree)
