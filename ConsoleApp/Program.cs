@@ -10,19 +10,66 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// Mirror a binary tree.
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            Tree tree = Tree.GetSampleTree();
+
+            Tree mirroredTree = MirrorBinaryTree(tree);
+            Print(tree);
             Console.WriteLine();
-            Console.Write("Press ENTER...");
+            Print(mirroredTree);
+            Console.WriteLine();
+            MirrorBinaryTree_InPlace(tree);
+            Print(tree);
+            Console.WriteLine();
+            Console.WriteLine("Press ENTER...");
             Console.Read();
         }
 
-        public static void Method()
+        public static Tree MirrorBinaryTree(Tree root)
         {
-            
+            if (root == null)
+                return null;
+
+
+            Tree newTree = new Tree(root.Value);
+            newTree.Right = MirrorBinaryTree(root.Left);
+            newTree.Left = MirrorBinaryTree(root.Right);
+
+            return newTree;
+        }
+
+        public static void MirrorBinaryTree_InPlace(Tree root)
+        {
+            if (root == null)
+                return;
+
+            var tmpLeft = root.Left;
+            var tmpRight = root.Right;
+
+            if (tmpLeft != null)
+            {
+                root.Right = new Tree(tmpLeft.Value);
+            }
+
+            if (tmpRight != null)
+                root.Left = new Tree(tmpRight.Value);
+
+            MirrorBinaryTree_InPlace(tmpLeft);
+            MirrorBinaryTree_InPlace(tmpRight);
+        }
+
+        private static void Print(Tree tree)
+        {
+            if (tree != null)
+            {
+                Console.Write("{0} ", tree.Value);
+                Print(tree.Left);
+                Print(tree.Right);
+            }
         }
     }
 }
