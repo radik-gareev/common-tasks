@@ -52,11 +52,29 @@ namespace ConsoleApp
 
             if (tmpLeft != null)
             {
-                root.Right = new Tree(tmpLeft.Value);
+                if (root.Right != null)
+                    root.Right.Value = tmpLeft.Value;
+                else
+                {
+                    root.Right = new Tree(tmpLeft.Value);
+                }
+            }
+            else
+            {
+                root.Right = null;
             }
 
             if (tmpRight != null)
-                root.Left = new Tree(tmpRight.Value);
+            {
+                if (root.Left != null)
+                    root.Left.Value = tmpRight.Value;
+                else
+                    root.Left = new Tree(tmpRight.Value);
+            }
+            else
+            {
+                root.Left = null;
+            }
 
             MirrorBinaryTree_InPlace(tmpLeft);
             MirrorBinaryTree_InPlace(tmpRight);
