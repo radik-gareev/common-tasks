@@ -12,26 +12,37 @@ namespace ConsoleApp
         [TestMethod]
         public void Test()
         {
+            string s = "()";
+            int size = Program.GetSubsequenceSize(s);
+            Assert.AreEqual(2, size);
 
-            List<int[]> randomArrays = new List<int[]>();
-            int testCases = 100;
-            for (int i = 0; i < testCases; i++)
-            {
-                int[] array = Generator.ArrayWithRandomLength(50, 100);
-                randomArrays.Add(array);
-            }
+            s = ")(";
+            size = Program.GetSubsequenceSize(s);
+            Assert.AreEqual(0, size);
 
-            for (int i = 0; i < randomArrays.Count; i++)
-            {
-                int[] randomArray = randomArrays[i];
+            s = ")))()";
+            size = Program.GetSubsequenceSize(s);
+            Assert.AreEqual(2, size);
 
-                Debug.WriteLine("{0}. Testing with randomArray.Length={1}...", i + 1, randomArray.Length);
+            s = ")))()))";
+            size = Program.GetSubsequenceSize(s);
+            Assert.AreEqual(2, size);
 
-                var stopwatch = Stopwatch.StartNew();
-                //Program.Method();
-                stopwatch.Stop();
-                Debug.WriteLine("{0}. GetNumberOfJumpsCombinations_Improved finished in {1}ms, result={2}", i + 1, stopwatch.ElapsedMilliseconds, "");
-            }
+            s = "(()()()))())";
+            size = Program.GetSubsequenceSize(s);
+            Assert.AreEqual(10, size);
+
+            s = "(()()())";
+            size = Program.GetSubsequenceSize(s);
+            Assert.AreEqual(8, size);
+
+            s = "((((";
+            size = Program.GetSubsequenceSize(s);
+            Assert.AreEqual(0, size);
+
+            s = "))))";
+            size = Program.GetSubsequenceSize(s);
+            Assert.AreEqual(0, size);
         }
 
     }
