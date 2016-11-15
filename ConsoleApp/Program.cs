@@ -10,7 +10,7 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// Find the size of longest correct bracket subsequence of array.
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
