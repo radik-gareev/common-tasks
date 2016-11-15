@@ -19,5 +19,13 @@ namespace ConsoleApp.Helpers
 
             Console.WriteLine(result.Substring(2));
         }
+
+        public static void Array<T>(T[] arr)
+        {
+            foreach (T t in arr)
+            {
+                Console.WriteLine(t);
+            }
+        }
     }
 }

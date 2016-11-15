@@ -10,7 +10,7 @@ namespace ConsoleApp.Helpers
     {
         private static readonly Random random = new Random();
 
-        public static LinkedList CreateLinkedListFromArray(int[] arr)
+        public static LinkedList LinkedListFromArray(int[] arr)
         {
             if (arr == null)
                 return null;
@@ -25,7 +25,7 @@ namespace ConsoleApp.Helpers
             return head;
         }
 
-        public static int[] CreateRandomArrayWithRandomLength(int minLength = 10, int maxLength = 50, int minValue = 0, int maxValue = 5000)
+        public static int[] ArrayWithRandomLength(int minLength = 10, int maxLength = 50, int minValue = 0, int maxValue = 5000)
         {
             int[] arr = new int[random.Next(minLength, maxLength)];
 
@@ -37,16 +37,32 @@ namespace ConsoleApp.Helpers
             return arr;
         }
 
-        public static int[] CreateRandomArray(int length, int minValue = 0, int maxValue = 5000)
+        public static int[] ArrayFixedLength(int length, int minValue = 0, int maxValue = 5000)
         {
-            int[] arr = new int[length];
+            return ArrayWithRandomLength(length, length, minValue, maxValue);
+        }
 
+        public static string[] StringArray(int minLength = 10, int maxLength = 50, string[] possibleCharacters = null)
+        {
+            if (possibleCharacters == null)
+            {
+                string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                possibleCharacters = (alphabet + alphabet.ToLower()).ToCharArray().Select(c => c.ToString()).ToArray();
+            }
+
+            string[] arr = new string[random.Next(minLength, maxLength)];
             for (int i = 0; i < arr.Length; i++)
             {
-                arr[i] = random.Next(minValue, maxValue);
+                int randomIndex = random.Next(0, possibleCharacters.Length);
+                arr[i] = possibleCharacters[randomIndex];
             }
 
             return arr;
+        }
+
+        public static string[] StringArrayFixedLength(int length, string[] possibleCharacters = null)
+        {
+            return StringArray(length, length, possibleCharacters);
         }
     }
 }
