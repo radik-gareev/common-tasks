@@ -15,7 +15,7 @@ namespace ConsoleApp
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            string str = "((((()(((";
+            string str = ")(((";
 
             Console.WriteLine(str);
             Console.WriteLine(BuildValidBracketsSequence(str));
@@ -26,40 +26,37 @@ namespace ConsoleApp
         public static string BuildValidBracketsSequence(string str)
         {
             int balance = 0;
-            for (int i = 1; i < str.Length - 1 && str.Length > 2; i++)
+            if (string.IsNullOrEmpty(str))
+                return str;
+
+            string result = string.Empty;
+
+            foreach (char c in str)
             {
-                if (str[i] == '(')
+                if (c == '(')
+                {
                     balance++;
-                else if (str[i] == ')')
+                }
+                else if (c == ')')
+                {
                     balance--;
-            }
 
-            // check first and last bracket
-            if (str[0] == ')')
-                str = '(' + str;
-            else
-                balance++;
-
-            if (str[str.Length - 1] == '(')
-                str = str + ')';
-            else
-                balance--;
-
-
-
-            // need to add '('
-            if (balance < 0)
-            {
-                str = new string('(', -1*balance) + str; 
+                    if (balance < 0)
+                    {
+                        result += "(";
+                        balance++;
+                    }
+                }
+                result += c;
             }
 
             // need to add ')'
             if (balance > 0)
             {
-                str = str + new string(')', balance);
+                result = result + new string(')', balance);
             }
 
-            return str;
+            return result;
         }
     }
 }
