@@ -10,27 +10,23 @@ namespace ConsoleApp
     public class UnitTests
     {
         [TestMethod]
-        public void Test()
+        public void MultiplicationUlong_Test()
         {
-
-            List<int[]> randomArrays = new List<int[]>();
             int testCases = 100;
-            for (int i = 0; i < testCases; i++)
+            int[] arr = Generator.ArrayFixedLength(testCases * 2, 5000, 100000); ;
+
+            for (int i = 0; i < arr.Length; i = i + 2)
             {
-                int[] array = Generator.ArrayWithRandomLength(50, 100);
-                randomArrays.Add(array);
-            }
+                ulong a = Convert.ToUInt64(arr[i]);
+                ulong b = Convert.ToUInt64(arr[i + 1]);
 
-            for (int i = 0; i < randomArrays.Count; i++)
-            {
-                int[] randomArray = randomArrays[i];
+                Debug.WriteLine("{0}. Testing multiplication of a={1} and b={2}...", i + 1, a, b);
 
-                Debug.WriteLine("{0}. Testing with randomArray.Length={1}...", i + 1, randomArray.Length);
+                ulong result = Program.MultiplicationUlong(a, b);
+                ulong expectedResult = a*b;
+                Debug.WriteLine("{0}. ER={1}, AR={2}", i + 1, expectedResult, result);
 
-                var stopwatch = Stopwatch.StartNew();
-                Program.Method();
-                stopwatch.Stop();
-                Debug.WriteLine("{0}. GetNumberOfJumpsCombinations_Improved finished in {1}ms, result={2}", i + 1, stopwatch.ElapsedMilliseconds, "");
+                Assert.AreEqual(expectedResult, result);
             }
         }
 
