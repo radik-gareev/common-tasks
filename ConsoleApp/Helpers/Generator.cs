@@ -64,5 +64,11 @@ namespace ConsoleApp.Helpers
         {
             return StringArray(length, length, possibleCharacters);
         }
+
+        public static string StringRandomLength(int minLength = 10, int maxLength = 50, string[] possibleCharacters = null)
+        {
+            string[] s = StringArray(minLength, maxLength, possibleCharacters);
+            return string.Join("", s);
+        }
     }
 }
