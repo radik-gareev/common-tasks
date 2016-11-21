@@ -98,7 +98,7 @@ namespace ConsoleApp
             int prevPrevZeroIndex = -1;
             for (int j = 0; j < arr.GetLength(0); j++)
             {
-                if (arr[j, col] == 1)
+                if (arr[j, col] == 0)
                 {
                     if (j - prevPrevZeroIndex - 1 > maxLength)
                     {
@@ -154,23 +154,25 @@ namespace ConsoleApp
             int maxLength = 0;
             int prevZeroIndex = -1;
             int prevPrevZeroIndex = -1;
+            int prevPrevPrevZeroIndex = -1;
             for (int j = 0; j < arr.GetLength(0); j++)
             {
-                if (arr[j, col] == 1)
+                if (arr[j, col] == 0)
                 {
-                    if (j - prevPrevZeroIndex - 1 > maxLength)
+                    if (j - prevPrevPrevZeroIndex - 1 > maxLength)
                     {
-                        maxLength = j - prevPrevZeroIndex - 1;
+                        maxLength = j - prevPrevPrevZeroIndex - 1;
                     }
 
+                    prevPrevPrevZeroIndex = prevPrevZeroIndex;
                     prevPrevZeroIndex = prevZeroIndex;
                     prevZeroIndex = j;
                 }
             }
 
-            if (arr.GetLength(0) - prevPrevZeroIndex - 1 > maxLength)
+            if (arr.GetLength(0) - prevPrevPrevZeroIndex - 1 > maxLength)
             {
-                maxLength = arr.GetLength(0) - prevPrevZeroIndex - 1;
+                maxLength = arr.GetLength(0) - prevPrevPrevZeroIndex - 1;
             }
             return maxLength;
         }
