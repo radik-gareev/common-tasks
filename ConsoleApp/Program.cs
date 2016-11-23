@@ -21,17 +21,65 @@ namespace ConsoleApp
         static void Main(string[] args)
         {
             //int[] arr = new[] { 1, 1,2,2,3,3,4,4,4,4,5,5 };
-            //int[] arr = new[] { 1, 2, 1, 3, 2, 2, 2, 2, 3 };
+            //int[] arr = new[] { 1, 2, 1, 3, 2, 2, 2, 2, 3, 4, 4 };
             //int[] arr = new[] { 1, 2, 3 };
 
-            //int[] arr = Generator.ArrayWithRandomLength(1000,1000,1, 1000);
-            int[] arr = Generator.ArrayWithRandomLength(1,10,1, 10);
+            //int[] arr = Generator.ArrayWithRandomLength(10000,10000, 10000, 10000);
+            int[] arr = Generator.ArrayWithRandomLength(1000,1000,1, 1000);
+            //int[] arr = Generator.ArrayWithRandomLength(1,10,1, 10);
             Console.WriteLine(string.Join(",", arr));
             Console.WriteLine("Array length: " + arr.Length);
-            Console.WriteLine("Brute force max points: " + GetMaxPointsBruteForce(arr));
-            Console.WriteLine("Improved alg max points: " + GetMaxPoints(arr));
+            //Console.WriteLine("Brute force max points: " + GetMaxPointsBruteForce(arr));
+            Console.WriteLine("Recursive alg max points: " + GetMaxPoints(arr));
+            Console.WriteLine("Improved alg max points: " + GetMaxPoints_Improved(arr));
             Console.Write("Press ENTER...");
             Console.Read();
+        }
+
+        public static int GetMaxPoints_Improved(int[] arr)
+        {
+            if (arr == null || arr.Length == 0)
+                return 0;
+
+            if (arr.Length == 1)
+                return arr[0];
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            int[] counts = new int[arr.Max() + 1];
+            for (int i = 0; i < arr.Length; i++)
+            {
+                counts[arr[i]]++;
+            }
+
+            int maxPoints = GetMaxPoints_NoRecursion(counts);
+            stopwatch.Stop();
+            Console.WriteLine("Improved alg finished in {0}ms", stopwatch.ElapsedMilliseconds);
+
+            return maxPoints;
+        }
+
+        private static int GetMaxPoints_NoRecursion(int[] counts)
+        {
+            if (counts == null || counts.Length == 0)
+                return 0;
+
+            if (counts.Length == 1)
+                return counts[1];
+
+            List<int> points = new List<int>();
+            points.Add(0);
+            points.Add(counts[1]);
+            points.Add(Math.Max(counts[1], counts[2] * 2));
+
+            if (counts.Length == 2)
+                return points[2];
+
+            for (int i = 3; i < counts.Length; i++)
+            {
+                points.Add(Math.Max(points[i - 1], counts[i]*i + points[i - 2]));
+            }
+
+            return points.Last();
         }
 
         #region get max points 
@@ -53,7 +101,7 @@ namespace ConsoleApp
 
             int maxPoints = GetMaxPoints_Recursive(counts, counts.Length - 1);
             stopwatch.Stop();
-            Console.WriteLine("Improved alg finished in {0}ms", stopwatch.ElapsedMilliseconds);
+            Console.WriteLine("Recursive alg finished in {0}ms", stopwatch.ElapsedMilliseconds);
 
             return maxPoints;
         }
@@ -74,7 +122,7 @@ namespace ConsoleApp
             int points1 = GetMaxPoints_Recursive(counts, index - 1);
             int points2 = GetMaxPoints_Recursive(counts, index - 2) + counts[index] * index;
             int maxPoints = Math.Max(points1, points2);
-            countsToIndex[index] = maxPoints; 
+            countsToIndex[index] = maxPoints;
 
             return maxPoints;
         }
