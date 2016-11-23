@@ -66,20 +66,20 @@ namespace ConsoleApp
             if (counts.Length == 1)
                 return counts[1];
 
-            List<int> points = new List<int>();
-            points.Add(0);
-            points.Add(counts[1]);
-            points.Add(Math.Max(counts[1], counts[2] * 2));
+            int prevPrev = counts[1];
+            int prev = Math.Max(counts[1], counts[2]*2);
 
             if (counts.Length == 2)
-                return points[2];
+                return prev;
 
             for (int i = 3; i < counts.Length; i++)
             {
-                points.Add(Math.Max(points[i - 1], counts[i]*i + points[i - 2]));
+                int current = Math.Max(prev, counts[i]*i + prevPrev);
+                prevPrev = prev;
+                prev = current;
             }
 
-            return points.Last();
+            return prev;
         }
 
         #region get max points 
