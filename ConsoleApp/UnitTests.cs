@@ -28,7 +28,7 @@ namespace ConsoleApp
                 Debug.WriteLine("{0}. Testing with randomArray.Length={1}...", i + 1, randomArray.Length);
 
                 var stopwatch = Stopwatch.StartNew();
-                Program.Method();
+                //Program.GetMaxSumSubarray(randomArray);
                 stopwatch.Stop();
                 Debug.WriteLine("{0}. GetNumberOfJumpsCombinations_Improved finished in {1}ms, result={2}", i + 1, stopwatch.ElapsedMilliseconds, "");
             }
