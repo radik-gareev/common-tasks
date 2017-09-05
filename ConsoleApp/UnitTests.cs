@@ -12,26 +12,17 @@ namespace ConsoleApp
         [TestMethod]
         public void Test()
         {
+            string s1 = "aacdb";
+            string s2 = "gafd";
+            string result = Program.ConcatenateWithUncommonChars(s1, s2);
 
-            List<int[]> randomArrays = new List<int[]>();
-            int testCases = 100;
-            for (int i = 0; i < testCases; i++)
-            {
-                int[] array = Generator.ArrayWithRandomLength(50, 100);
-                randomArrays.Add(array);
-            }
+            Assert.AreEqual("cbgf", result);
 
-            for (int i = 0; i < randomArrays.Count; i++)
-            {
-                int[] randomArray = randomArrays[i];
+            s1 = "abcs";
+            s2 = "cxzca";
+            result = Program.ConcatenateWithUncommonChars(s1, s2);
 
-                Debug.WriteLine("{0}. Testing with randomArray.Length={1}...", i + 1, randomArray.Length);
-
-                var stopwatch = Stopwatch.StartNew();
-                Program.Method();
-                stopwatch.Stop();
-                Debug.WriteLine("{0}. GetNumberOfJumpsCombinations_Improved finished in {1}ms, result={2}", i + 1, stopwatch.ElapsedMilliseconds, "");
-            }
+            Assert.AreEqual("bsxz", result);
         }
 
     }
