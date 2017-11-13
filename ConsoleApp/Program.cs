@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -23,14 +24,18 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// https://www.hackerrank.com/challenges/ctci-ransom-note/problem
+        /// Hash Tables: Ransom Note
         /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
             try
             {
-                
+                string magazine = "give me one grand today night";
+                string note = " give one grand today";
+
+                CanMakeNote(magazine, note);
             }
             catch (Exception e)
             {
@@ -40,6 +45,43 @@ namespace ConsoleApp
             Console.WriteLine();
             Console.Write("Press ENTER...");
             Console.Read();
+        }
+
+        private static bool CanMakeNote(string magazine, string note)
+        {
+            Dictionary<string, int> dict = new Dictionary<string, int>(StringComparer.InvariantCulture);
+
+            string[] array = magazine.Split(' ');
+
+            foreach (string s in array)
+            {
+                if (dict.ContainsKey(s))
+                {
+                    dict[s]++;
+                }
+                else
+                {
+                    dict[s] = 1;
+                }
+            }
+
+            array = note.Split(' ');
+            bool result = true;
+
+            foreach (string word in array)
+            {
+                if (dict.ContainsKey(word) && dict[word] > 0)
+                {
+                    dict[word]--;
+                }
+                else
+                {
+                    result = false;
+                    break;
+                }
+            }
+
+            return result;
         }
     }
 }
