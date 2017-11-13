@@ -23,14 +23,18 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// https://www.hackerrank.com/challenges/ctci-making-anagrams/problem
+        /// Strings: Making Anagrams
         /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
             try
             {
-                
+                string a = "fcrxzwscanmligyxyvym";
+                string b = "jxwtrhvujlmrpdoqbisbwhmgpmeoke";
+
+                int result = NumberOfCharactersToDelete(a, b);
             }
             catch (Exception e)
             {
@@ -40,6 +44,46 @@ namespace ConsoleApp
             Console.WriteLine();
             Console.Write("Press ENTER...");
             Console.Read();
+        }
+
+        private static int NumberOfCharactersToDelete(string a, string b)
+        {
+            int result = 0;
+
+            Dictionary<char, int> dictA = new Dictionary<char, int>();
+            Dictionary<char, int> dictB = new Dictionary<char, int>();
+
+            foreach (char c in a)
+            {
+                if (dictA.ContainsKey(c))
+                    dictA[c]++;
+                else
+                    dictA[c] = 1;
+            }
+
+            foreach (char c in b)
+            {
+                if (dictB.ContainsKey(c))
+                    dictB[c]++;
+                else
+                    dictB[c] = 1;
+            }
+
+            Dictionary<char, int> copy = new Dictionary<char, int>(dictA);
+            foreach (char c in copy.Keys)
+            {
+                if (!dictB.ContainsKey(c))
+                    continue;
+
+                dictA[c] = Math.Abs(dictA[c] - dictB[c]);
+                dictB[c] = 0;
+            }
+
+            result += dictA.Values.Sum();
+            result += dictB.Values.Sum();
+
+
+            return result;
         }
     }
 }
