@@ -1,108 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleApp.Helpers;
-using System.Management.Automation;
-using System.Management.Automation.Runspaces;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.Deployment.WindowsInstaller;
-using Microsoft.Win32;
 
-namespace ConsoleApp
+public class Test
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        /// <summary>
-        /// http://www.spoj.com/problems/PIGBANK/
-        /// Piggy-Bank
-        /// </summary>
-        /// <param name="args"></param>
-        public static void Main(string[] args)
+        int numberOfTests = Convert.ToInt32(Console.ReadLine());
+
+        for (int i = 1; i <= numberOfTests; i++)
         {
-            try
+            string[] weights = Console.ReadLine().Split(' ');
+            int totalWeight = Convert.ToInt32(weights[1]) - Convert.ToInt32(weights[0]);
+            int numberOfCoins = Convert.ToInt32(Console.ReadLine());
+
+            int[] wt = new int[numberOfCoins];
+            int[] val = new int[numberOfCoins];
+
+            for (int j = 0; j < numberOfCoins; j++)
             {
-                Dictionary<int, int> coinsPtoW = new Dictionary<int, int>
-                {
-                    {1, 1 },
-                    {50, 30 }
-                };
-
-                int weight = 100;
-
-                Dictionary<int, int> memory = new Dictionary<int, int>(coinsPtoW);
-                int res = GetMinimumAmount(weight, coinsPtoW);
-
-                int res2 = GetMinimumAmount_Recursive(weight, coinsPtoW);
-            }
-            catch (Exception e)
-            {
-                throw e;
+                string str = Console.ReadLine();
+                val[j] = int.Parse(str.Split(' ')[0]);
+                wt[j] = int.Parse(str.Split(' ')[1]);
             }
 
-            Console.WriteLine();
-            Console.Write("Press ENTER...");
-            Console.Read();
+            int minAmount = GetMinimumAmount(totalWeight, val, wt);
+
+            if (minAmount == Int32.MaxValue)
+            {
+                Console.WriteLine("This is impossible.");
+            }
+            else
+            {
+                Console.WriteLine("The minimum amount of money in the piggy-bank is {0}.", minAmount);
+            }
+        }
+    }
+
+    private static int GetMinimumAmount(int totalWeight, int[] val, int[] wt)
+    {
+        int[] weights = new int[totalWeight + 1];
+        weights[0] = 0;
+
+        for (int i = 1; i <= totalWeight; i++)
+        {
+            weights[i] = Int32.MaxValue;
+
+            for (int j = 0; j < val.Length; j++)
+            //foreach (int p in coinsPtoW.Keys)
+            {
+                int coinWeight = wt[j];
+                int coinValue = val[j];
+
+                if (i >= coinWeight)
+                    if (weights[i - coinWeight] != int.MaxValue && weights[i - coinWeight] + coinValue < weights[i])
+                        weights[i] = weights[i - coinWeight] + coinValue;
+            }
         }
 
-        private static int GetMinimumAmount(int weight, Dictionary<int, int> coinsPtoW)
-        {
-            int[] weights = new int[weight + 1];
-            for (int i = 0; i < weights.Length; i++)
-            {
-                weights[i] = int.MaxValue;
-            }
 
-            foreach (int p in coinsPtoW.Keys)
-            {
-                int coinWeight = coinsPtoW[p];
-                if (weights[coinWeight] > p)
-                {
-                    weights[coinWeight] = p;
 
-                    for (int i = coinWeight + 1; i <= weight; i++)
-                    {
-                        weights[i] = Math.Min(weights[i], weights[coinWeight] + weights[i - coinWeight]);
-                    }
-                }
-            }
 
-            return weights[weight];
-        }
 
-        private static int GetMinimumAmount_Recursive(int weight, Dictionary<int, int> coinsPtoW)
-        {
-            if (weight < 0)
-            {
-                return int.MaxValue;
-            }
 
-            if (weight == 0)
-            {
-                return 0;
-            }
+        //for (int i = 0; i < weights.Length; i++)
+        //{
+        //    weights[i] = maxValue;
+        //}
 
-            List<int> amounts = new List<int>();
+        //foreach (int p in coinsPtoW.Keys)
+        //{
+        //    int coinWeight = coinsPtoW[p];
+        //    if (weights.Length >= coinWeight && weights[coinWeight] > p)
+        //    {
+        //        weights[coinWeight] = p;
 
-            foreach (int p in coinsPtoW.Keys)
-            {
-                int amount = GetMinimumAmount_Recursive(weight - coinsPtoW[p], coinsPtoW);
+        //        for (int i = 1; i <= totalWeight; i++)
+        //        {
+        //            weights[i] = Math.Min(weights[i], weights[coinWeight] + weights[i - coinWeight]);
+        //        }
+        //    }
+        //}
 
-                amount = amount == int.MaxValue ? amount : amount + p;
-                amounts.Add(amount);
-            }
-
-            return amounts.Min();
-        }
+        return weights[totalWeight];
     }
 }
