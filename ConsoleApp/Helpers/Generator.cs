@@ -25,6 +25,23 @@ namespace ConsoleApp.Helpers
             return head;
         }
 
+        public static LinkedList LoopedLinkedListFromArray(int[] arr)
+        {
+            if (arr == null)
+                return null;
+            LinkedList head = new LinkedList(arr[0]);
+            LinkedList current = head;
+            for (int i = 1; i < arr.Length; i++)
+            {
+                current.Next = new LinkedList(arr[i]);
+                current = current.Next;
+            }
+
+            current.Next = head;
+
+            return head;
+        }
+
         public static int[] ArrayWithRandomLength(int minLength = 10, int maxLength = 50, int minValue = 0, int maxValue = 5000)
         {
             int[] arr = new int[random.Next(minLength, maxLength)];

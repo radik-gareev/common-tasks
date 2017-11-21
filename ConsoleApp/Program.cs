@@ -23,14 +23,19 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// Add element to a sorted circular linked list.
         /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
             try
             {
-                
+                LinkedList node = Generator.LoopedLinkedListFromArray(new[] { 1, 2, 3, 4 });
+
+                Print.LoopedLinkedList(node);
+                int n = 10;
+                InsertIntoSingleLinkedList(node, n);
+                Print.LoopedLinkedList(node);
             }
             catch (Exception e)
             {
@@ -40,6 +45,33 @@ namespace ConsoleApp
             Console.WriteLine();
             Console.Write("Press ENTER...");
             Console.Read();
+        }
+
+        private static void InsertIntoSingleLinkedList(LinkedList first, int n)
+        {
+            if (first == null)
+            {
+                return;
+            }
+
+            LinkedList prev = first;
+            LinkedList current = first;
+
+            while (current.Value < n || first.Value > n)
+            {
+                prev = current;
+                current = current.Next;
+
+                if (current.Next == first)
+                {
+                    prev = current;
+                    break;
+                }
+            }
+
+            LinkedList tmp = new LinkedList(prev.Next.Value, prev.Next.Next);
+            prev.Next.Value = n;
+            prev.Next.Next = tmp;
         }
     }
 }
