@@ -44,7 +44,7 @@ namespace ConsoleApp
                                 new Tree(12))));
 
                 List<string> result = new List<string>();
-                TraverseDfs(tree, result);
+                TraverseDfsUsingStack(tree, result);
             }
             catch (Exception e)
             {
@@ -56,8 +56,6 @@ namespace ConsoleApp
             Console.Read();
         }
 
-        private static string result1;
-
         private static void TraverseDfs(Tree root, List<string> result)
         {
             if (root == null)
@@ -66,7 +64,24 @@ namespace ConsoleApp
 
             TraverseDfs(root.Left, result);
             TraverseDfs(root.Right, result);
+        }
 
+        private static void TraverseDfsUsingStack(Tree root, List<string> result)
+        {
+            Stack<Tree> stack = new Stack<Tree>();
+            stack.Push(root);
+
+            while (stack.Count > 0)
+            {
+                Tree node = stack.Pop();
+                if(node == null)
+                    continue;
+
+                result.Add(node.Value.ToString());
+
+                stack.Push(node.Right);
+                stack.Push(node.Left);
+            }
         }
     }
 }
