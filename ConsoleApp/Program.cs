@@ -23,7 +23,7 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// Breadth-first search.
         /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
@@ -44,7 +44,7 @@ namespace ConsoleApp
                                 new Tree(12))));
 
                 List<string> result = new List<string>();
-                TraverseDfs(tree, result);
+                TraverseBFS(tree, result);
             }
             catch (Exception e)
             {
@@ -56,16 +56,20 @@ namespace ConsoleApp
             Console.Read();
         }
 
-        private static string result1;
-
-        private static void TraverseDfs(Tree root, List<string> result)
+        private static void TraverseBFS(Tree root, List<string> result)
         {
-            if (root == null)
-                return;
-            result.Add(root.Value.ToString());
+            Queue<Tree> q = new Queue<Tree>();
+            q.Enqueue(root);
 
-            TraverseDfs(root.Left, result);
-            TraverseDfs(root.Right, result);
+            while (q.Count > 0)
+            {
+                Tree node = q.Dequeue();
+                if(node == null)
+                    continue;
+                result.Add(node.Value.ToString());
+                q.Enqueue(node.Left);
+                q.Enqueue(node.Right);
+            }
 
         }
     }
