@@ -30,7 +30,21 @@ namespace ConsoleApp
         {
             try
             {
-                
+                Tree tree = new Tree(
+                    1, 
+                        new Tree(2, 
+                            new Tree(3,
+                                new Tree(15), 
+                                new Tree(16)),
+                            new Tree(4)),
+                        new Tree(5,
+                            new Tree(6),
+                            new Tree(0,
+                                new Tree(11),
+                                new Tree(12))));
+
+                List<string> result = new List<string>();
+                TraverseDfs(tree, result);
             }
             catch (Exception e)
             {
@@ -40,6 +54,19 @@ namespace ConsoleApp
             Console.WriteLine();
             Console.Write("Press ENTER...");
             Console.Read();
+        }
+
+        private static string result1;
+
+        private static void TraverseDfs(Tree root, List<string> result)
+        {
+            if (root == null)
+                return;
+            result.Add(root.Value.ToString());
+
+            TraverseDfs(root.Left, result);
+            TraverseDfs(root.Right, result);
+
         }
     }
 }
