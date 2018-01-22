@@ -23,14 +23,16 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// Implement an algorithm to find the kth to last element of a singly linked list.
         /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
             try
             {
-                
+                LinkedList list = Generator.LinkedListFromArray(new[] { 1, 2, 5, 4 });
+                Print.LinkedList(list);
+                Console.WriteLine(FindKthToLastElement(list, 3));
             }
             catch (Exception e)
             {
@@ -40,6 +42,26 @@ namespace ConsoleApp
             Console.WriteLine();
             Console.Write("Press ENTER...");
             Console.Read();
+        }
+
+        private static int FindKthToLastElement(LinkedList head, int k)
+        {
+            LinkedList current = head;
+
+            for (int i = 0; i < k; i++)
+            {
+                current = current.Next;
+            }
+
+            LinkedList runner = head;
+
+            while (current.Next != null)
+            {
+                current = current.Next;
+                runner = runner.Next;
+            }
+
+            return runner.Value;
         }
     }
 }
