@@ -23,14 +23,17 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// https://www.hackerrank.com/challenges/stockmax/problem
+        /// Stock Maximize
         /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
             try
             {
-                
+                int[] arr = new[] {1, 2, 100};
+
+                int res = StockMax(arr);
             }
             catch (Exception e)
             {
@@ -40,6 +43,24 @@ namespace ConsoleApp
             Console.WriteLine();
             Console.Write("Press ENTER...");
             Console.Read();
+        }
+
+        private static int StockMax(int[] prices)
+        {
+            int profit = 0;
+            int max = 0;
+
+            for (int i = prices.Length - 1; i >= 0; i--)
+            {
+                if (prices[i] > max)
+                {
+                    max = prices[i];
+                }
+
+                profit = profit + max - prices[i];
+            }
+
+            return profit;
         }
     }
 }
