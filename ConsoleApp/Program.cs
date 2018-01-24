@@ -23,14 +23,15 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// Reverse words order in a string, e.g. "one two tree" => "tree two one"
         /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
             try
             {
-                
+                string s = "one two tree";
+                string res = ReverseWords(s);
             }
             catch (Exception e)
             {
@@ -40,6 +41,19 @@ namespace ConsoleApp
             Console.WriteLine();
             Console.Write("Press ENTER...");
             Console.Read();
+        }
+
+        private static string ReverseWords(string s)
+        {
+            string[] words = s.Split(' ');
+            string res = "";
+
+            for(int i=words.Length - 1; i >= 0;i--)
+            {
+                res += words[i] + " ";
+            }
+
+            return res.TrimEnd();
         }
     }
 }
