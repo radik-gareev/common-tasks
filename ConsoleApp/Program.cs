@@ -17,7 +17,7 @@ namespace ConsoleApp
     public class Program
     {
         /// <summary>
-        /// 
+        /// 1.3 Given two strings, write a method to decide if one is a permutation of the other
         /// </summary>
         /// <param name="args"></param>
         private static void Main(string[] args)
