@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -24,7 +25,10 @@ namespace ConsoleApp
         {
             try
             {
+                string a = "12a";
+                string b = "a21";
 
+                bool IsPermutationSort = IsPermutationLettersCount(a, b);
             }
             catch (Exception e)
             {
@@ -34,6 +38,72 @@ namespace ConsoleApp
             Console.WriteLine();
             Console.Write("Press ENTER...");
             Console.Read();
+        }
+
+        private static bool IsPermutationSort(string a, string b)
+        {
+            if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b) || a.Length != b.Length)
+                return false;
+
+            var aArray = a.ToCharArray();
+            var bArray = b.ToCharArray();
+            Array.Sort(aArray);
+            Array.Sort(bArray);
+            return aArray.Equals(bArray);
+        }
+
+        private static bool IsPermutationDict(string a, string b)
+        {
+            if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b) || a.Length != b.Length)
+                return false;
+
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+
+            foreach (var c in a)
+            {
+                if (dict.ContainsKey(c))
+                    dict[c]++;
+                else
+                {
+                    dict.Add(c, 1);
+                }
+            }
+
+            foreach (var c in b)
+            {
+                if (dict.ContainsKey(c))
+                    dict[c]--;
+                else
+                    return false;
+
+                if (dict[c] < 0)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private static bool IsPermutationLettersCount(string a, string b)
+        {
+            if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b) || a.Length != b.Length)
+                return false;
+
+            int[] count = new int[256];
+
+            foreach (char c in a)
+            {
+                int i = Convert.ToInt32(c);
+                count[i]++;
+            }
+
+            foreach (char c in b)
+            {
+                int i = Convert.ToInt32(c);
+                if (--count[i] < 0)
+                    return false;
+            }
+
+            return true;
         }
     }
 }
