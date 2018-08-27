@@ -22,15 +22,6 @@ namespace ConsoleApp
         /// <param name="args"></param>
         private static void Main(string[] args)
         {
-            try
-            {
-
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-
             Console.WriteLine();
             Console.Write("Press ENTER...");
             Console.Read();
