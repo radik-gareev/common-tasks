@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp.Helpers
 {
@@ -13,7 +11,10 @@ namespace ConsoleApp.Helpers
         public static LinkedList LinkedListFromArray(int[] arr)
         {
             if (arr == null)
+            {
                 return null;
+            }
+
             LinkedList head = new LinkedList(arr[0]);
             LinkedList current = head;
             for (int i = 1; i < arr.Length; i++)
@@ -69,6 +70,23 @@ namespace ConsoleApp.Helpers
         {
             string[] s = StringArray(minLength, maxLength, possibleCharacters);
             return string.Join("", s);
+        }
+
+        public static Graph SampleGraph()
+        {
+            // 0-4
+            // 3-5-1
+            //    \/
+            //    2
+            return new Graph(new List<int>[]
+            {
+                new List<int>() {4}, // successors of vertice 0
+                new List<int>() {2, 5}, // successors of vertice 1
+                new List<int>() {1, 5}, // successors of vertice 2
+                new List<int>() {5}, // successors of vertice 3
+                new List<int>() {0, 5}, // successors of vertice 4
+                new List<int>() {1, 2, 3} // successors of vertice 5
+            });
         }
     }
 }
