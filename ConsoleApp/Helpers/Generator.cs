@@ -91,6 +91,13 @@ namespace ConsoleApp.Helpers
 
         public static Tree SampleTree()
         {
+            //      5
+            //    /   \
+            //    3    7
+            //   / \  / \
+            //  1   4 6  8
+            // / \        \
+            // 0  2        9
             Tree tree = new Tree(5,
                 new Tree(3,
                     new Tree(1,

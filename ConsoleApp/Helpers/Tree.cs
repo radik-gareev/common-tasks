@@ -53,5 +53,30 @@ namespace ConsoleApp.Helpers
             DFS(node.Left);
             DFS(node.Right);
         }
+
+        public static void InOrderTraversal()
+        {
+            Tree tree = Generator.SampleTree();
+
+            Stack<Tree> stack = new Stack<Tree>();
+
+            Tree current = tree;
+
+            while (current != null || stack.Count > 0)
+            {
+                while (current != null)
+                {
+                    stack.Push(current);
+
+                    current = current.Left;
+                }
+
+                current = stack.Pop();
+
+                Console.WriteLine(current.Value);
+
+                current = current.Right;
+            }
+        }
     }
 }
