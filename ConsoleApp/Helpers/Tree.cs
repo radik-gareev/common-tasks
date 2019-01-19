@@ -10,6 +10,7 @@ namespace ConsoleApp.Helpers
     {
         public Tree Left;
         public Tree Right;
+        public Tree Parent;
         public int Value;
 
         public Tree(int value)
@@ -17,11 +18,12 @@ namespace ConsoleApp.Helpers
             Value = value;
         }
 
-        public Tree(int value, Tree left, Tree right)
+        public Tree(int value, Tree left, Tree right, Tree parent)
         {
             Value = value;
             Left = left;
             Right = right;
+            Parent = parent;
         }
 
         public string BFS(Tree root)

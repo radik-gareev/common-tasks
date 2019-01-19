@@ -98,17 +98,40 @@ namespace ConsoleApp.Helpers
             //  1   4 6  8
             // / \        \
             // 0  2        9
-            Tree tree = new Tree(5,
-                new Tree(3,
-                    new Tree(1,
-                        new Tree(0), new Tree(2)),
-                    new Tree(4)),
-                new Tree(7,
-                    new Tree(6),
-                    new Tree(8, null,
-                        new Tree(9))));
+            Tree root = new Tree(5);
+            Tree left1 = new Tree(3);
+            left1.Parent = root;
+            root.Left = left1;
+            Tree right1 = new Tree(7);
+            right1.Parent = root;
+            root.Right = right1;
 
-            return tree;
+            Tree left2 = new Tree(1);
+            left2.Parent = left1;
+            left1.Left = left2;
+            Tree right2 = new Tree(4);
+            right2.Parent = left1;
+            left1.Right = right2;
+
+            Tree left3 = new Tree(0);
+            left3.Parent = left2;
+            left2.Left = left3;
+            Tree right3 = new Tree(2);
+            right3.Parent = left2;
+            left2.Right = right3;
+
+            Tree left22 = new Tree(6);
+            left22.Parent = right1;
+            right1.Left = left22;
+            Tree right22 = new Tree(8);
+            right22.Parent = right1;
+            right1.Right = right22;
+
+            Tree right32 = new Tree(9);
+            right32.Parent = right22;
+            right22.Right = right32;
+
+            return root;
         }
     }
 }
