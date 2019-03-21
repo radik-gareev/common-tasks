@@ -24,7 +24,7 @@ namespace ConsoleApp.Helpers
         {
             foreach (T t in arr)
             {
-                Console.WriteLine(t);
+                Console.WriteLine(t.ToString());
             }
         }
     }
