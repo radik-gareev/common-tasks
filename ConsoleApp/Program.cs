@@ -27,8 +27,11 @@ namespace ConsoleApp
             {
                 Tree tree = Tree.GetSampleTree();
 
-                var e = new TreeEnumerator(tree);
-                e.GetNext();
+                var e = new BSTIterator(tree);
+                while (e.hasNext())
+                {
+                    Console.WriteLine(e.next().Value);
+                }
             }
             catch (Exception e)
             {
@@ -40,51 +43,86 @@ namespace ConsoleApp
             Console.Read();
         }
 
-        private class TreeEnumerator
+        public class BSTIterator
         {
-            private Tree _root;
-            private int _lastValue;
-
-            public TreeEnumerator(Tree tree)
+            private Tree root;
+            private Tree current;
+            private Tree endNode;
+            //@param root: The root of binary tree.
+            public BSTIterator(Tree root)
             {
-                _root = tree;
-                _lastValue = int.MinValue;
-            }
-
-            public int GetNext()
-            {
-                Stack<Tree> stack = new Stack<Tree>();
-
-                Tree curr = _root;
-
-                // traverse the tree
-                while (curr != null || stack.Count > 0)
+                if (root == null)
                 {
-
-                    /* Reach the left most Node of the
-                    curr Node */
-                    while (curr != null)
-                    {
-                        /* place pointer to a tree node on
-                           the stack before traversing
-                          the node's left subtree */
-                        stack.Push(curr);
-                        curr = curr.Left;
-                    }
-
-                    /* Current must be NULL at this point */
-                    curr = stack.Pop();
-
-                    Console.WriteLine(curr.Value);
-
-                    /* we have visited the node and its
-                       left subtree.  Now, it's right
-                       subtree's turn */
-                    curr = curr.Right;
+                    return;
                 }
 
+                this.root = root;
+                this.current = root;
+                this.endNode = root;
 
-                return 0;
+                while (endNode != null && endNode.Right != null)
+                {
+                    endNode = endNode.Right;
+                }
+                while (current != null && current.Left != null)
+                {
+                    current = current.Left;
+                }
+            }
+
+            //@return: True if there has next node, or false
+            public bool hasNext()
+            {
+                return current != null && current.Value <= endNode.Value;
+            }
+
+            //@return: return next node
+            public Tree next()
+            {
+                Tree rst = current;
+                //current node has right child
+                if (current.Right != null)
+                {
+                    current = current.Right;
+                    while (current.Left != null)
+                    {
+                        current = current.Left;
+                    }
+                }
+                else
+                {//Current node does not have right child.
+                    current = findParent();
+                }
+                return rst;
+            }
+
+            //Find current's parent, where parent.left == current.
+            public Tree findParent()
+            {
+                Tree node = root;
+                Tree parent = null;
+                int val = current.Value;
+                if (val == endNode.Value)
+                {
+                    return null;
+                }
+                while (node != null)
+                {
+                    if (val < node.Value)
+                    {
+                        parent = node;
+                        node = node.Left;
+                    }
+                    else if (val > node.Value)
+                    {
+                        node = node.Right;
+                    }
+                    else
+                    {//node.val == current.val
+                        break;
+                    }
+                }
+                return parent;
             }
         }
     }
